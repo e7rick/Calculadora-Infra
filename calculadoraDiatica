@@ -1,0 +1,120 @@
+#include <stdio.h>
+
+void decimalParaBinario(int base10) {
+    int binario[32];
+    int i = 0;
+
+    printf("\nconversao para binario:\n");
+
+    while (base10 > 0) {
+        binario[i] = base10 % 2;
+        printf("%d / 2 = %d | resto = %d\n", base10, base10 / 2, binario[i]);
+        base10 = base10 / 2;
+        i++;
+    }
+
+    printf("\nresultado em binário: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%d", binario[j]);
+    }
+    printf("\n");
+}
+
+  void decimalParaOctal(int base10) {
+      int octal[32];
+      int i = 0;
+
+      printf("\nconversao para octal:\n");
+
+      while (base10 > 0) {
+          octal[i] = base10 % 8;
+          printf("%d / 8 = %d | resto = %d\n", base10, base10 / 8, octal[i]);
+          base10 = base10 / 8;
+          i++;
+      }
+
+      printf("\nresultado em octal: ");
+      for (int j = i - 1; j >= 0; j--) {
+          printf("%d", octal[j]);
+      }
+      printf("\n");
+  }
+
+
+void decimalParaHexadecimal(int base10) {
+    char hexadecimal[32];
+    int i = 0;
+
+    printf("\nconversao para hexadecimal:\n");
+
+    while (base10 > 0) {
+        int resto = base10 % 16;
+
+      if (resto < 10) {
+        hexadecimal[i] = '0' + resto;
+      } else {
+        switch (resto) {
+            case 10: hexadecimal[i] = 'A'; break;
+            case 11: hexadecimal[i] = 'B'; break;
+            case 12: hexadecimal[i] = 'C'; break;
+            case 13: hexadecimal[i] = 'D'; break;
+            case 14: hexadecimal[i] = 'E'; break;
+            case 15: hexadecimal[i] = 'F'; break;
+        }
+      }
+
+        printf("%d / 16 = %d | resto = %c\n", base10, base10 / 16, hexadecimal[i]);
+        base10 = base10 / 16;
+        i++;
+    }
+
+    printf("\nresultado em hexadecimal: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%c", hexadecimal[j]);
+    }
+    printf("\n");
+}
+void decimalParaBCD(int base10) {
+    int bcd[32 * 4];  
+    int i = 0;
+
+    printf("\nconversao para BCD:\n");
+
+ 
+    while (base10 > 0) {
+        int digito = base10 % 10;
+        base10 = base10 / 10;
+
+        int y = digito;
+        printf("-%d :\n", digito);
+        for (int j = 0; j < 4; j++) {
+            bcd[i * 4 + j] =  y % 2;
+            printf("%d / 2 = %d | resto = %d\n",  y,  y / 2, bcd[i * 4 + j]);
+           y =  y / 2;
+        }
+        i++;
+    }
+
+   
+    printf("\nresultado em BCD: ");
+    for (int j = i * 4 - 1; j >= 0; j--) {
+        printf("%d", bcd[j]);
+    }
+    printf("\n");
+}
+
+
+  int main() {
+      int base10;
+    
+      printf("digite um numero em base 10 para a conversao de bases e pontos flutuantes: ");
+      scanf("%d", &base10);
+
+      decimalParaBinario(base10);
+      decimalParaOctal(base10);
+      decimalParaHexadecimal(base10); 
+      decimalParaBCD(base10);
+
+      return 0;
+  }
+  

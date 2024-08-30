@@ -102,11 +102,65 @@ void decimalParaBCD(int base10) {
     }
     printf("\n");
 }
+ void decimalParaComplementoDois(int base10) {
+    int binario[16];
+    int i;
 
+    for (i = 0; i < 16; i++) {
+        binario[i] = 0;
+    }
 
+    if (base10 < 0) {
+     
+        int positivo = -base10; 
+
+        i = 0;
+        
+        while (positivo > 0) {
+            binario[i] = positivo % 2;
+            positivo = positivo / 2;
+            i++;
+        }
+
+        while (i < 16) {
+            binario[i] = 0;
+            i++;
+        }
+
+        for (i = 0; i < 16; i++) {
+            binario[i] = 1 - binario[i];
+        }
+
+      
+        int excedente = 1;
+        for (i = 0; i < 16; i++) {
+            int soma = binario[i] + excedente;
+            binario[i] = soma % 2;
+            excedente = soma / 2;
+        }
+
+    } else {
+        i = 0;
+        while (base10 > 0) {
+            binario[i] = base10 % 2;
+            base10 = base10 / 2;
+            i++;
+        }
+
+        while (i < 16) {
+            binario[i] = 0;
+            i++;
+        }
+    }
+
+    printf("\nresultado em complemento a 2 de 16 bits: ");
+    for (i = 15; i >= 0; i--) {
+        printf("%d", binario[i]);
+    }
+    printf("\n");
+ }
   int main() {
       int base10;
-    
       printf("digite um numero em base 10 para a conversao de bases e pontos flutuantes: ");
       scanf("%d", &base10);
 
@@ -115,6 +169,13 @@ void decimalParaBCD(int base10) {
       decimalParaHexadecimal(base10); 
       decimalParaBCD(base10);
 
+      int base16;
+        printf("\ndigite um numero para conversao de Base 10 para Binário com sinal(Complemento a 2): ");
+        scanf("%d", &base16);
+        decimalParaComplementoDois(base16);
+
       return 0;
   }
+  
+  
   

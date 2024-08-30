@@ -1,3 +1,9 @@
+// Erick Acioli Belo - eab2@cesar.school
+
+// Relatorio das questoes: 1- 27/08/2024 as 18:00, 2 - 29/08/2024 as 15:00, 3 - 29/08/2024 as 21:30.
+
+
+
 #include <stdio.h>
 
 void decimalParaBinario(int base10) {
@@ -159,7 +165,58 @@ void decimalParaBCD(int base10) {
     }
     printf("\n");
  }
+
+void exibiBits(int valor, int bits) {
+    for (int i = bits - 1; i >= 0; i--) {
+        printf("%d", (valor >> i) & 1);
+    }
+}
+
+
+void realParaBits(double baseReal) {
+    
+    float f = (float)baseReal;
+    int valor_f = *(int*)&f;
+
+    printf("\nrepresentacao em float (32 bits):\n");
+    printf("numero: %f\n", f);
+    printf("bits: ");
+    exibiBits(valor_f, 32);
+    printf("\n");
+
+    int sinal_f = (valor_f >> 31) & 1;
+    int expoente_f = (valor_f >> 23) & 0xFF;
+    int fracao_f = valor_f & 0x7FFFFF;
+
+    printf("sinal: %d\n", sinal_f);
+    printf("expoente (com vies 127): %d\n", expoente_f);
+    printf("expoente real: %d\n", expoente_f - 127);
+    printf("fracao: ");
+    exibiBits(fracao_f, 23);
+    printf("\n");
+
+    double d = baseReal;
+    long long valor_d = *(long long*)&d;
+
+    printf("\nrepresentacao em double(64 bits):\n");
+    printf("numero: %lf\n", d);
+    printf("bits: ");
+    exibiBits(valor_d, 64);
+    printf("\n");
+
+    int sinal_d = (valor_d >> 63) & 1;
+    int expoente_d = (valor_d >> 52) & 0x7FF;
+    long long fracao_d = valor_d & 0xFFFFFFFFFFFFF;
+
+    printf("sinal: %d\n", sinal_d);
+    printf("expoente (com vies 1023): %d\n", expoente_d);
+    printf("expoente real: %d\n", expoente_d - 1023);
+    printf("fracao: ");
+    exibiBits(fracao_d, 52);
+    printf("\n");
+}
   int main() {
+      
       int base10;
       printf("digite um numero em base 10 para a conversao de bases e pontos flutuantes: ");
       scanf("%d", &base10);
@@ -173,9 +230,19 @@ void decimalParaBCD(int base10) {
         printf("\ndigite um numero para conversao de Base 10 para Binário com sinal(Complemento a 2): ");
         scanf("%d", &base16);
         decimalParaComplementoDois(base16);
+      
+      double baseReal;
+      printf("\ndigite um numero real: ");
+      while (getchar() != '\n');
+      scanf("%lf", &baseReal);
+      realParaBits(baseReal);
 
       return 0;
   }
   
   
   
+  
+  
+  
+
